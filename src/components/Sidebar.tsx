@@ -8,7 +8,7 @@ const linkBase =
 const Sidebar: React.FC = () => {
     return (
         <aside className="sticky top-10 hidden shrink-0 flex-col items-center gap-4 md:flex">
-            <nav className="flex flex-col gap-3 rounded-2xl border border-white/10 bg-white/5 p-3 backdrop-blur supports-[backdrop-filter]:bg-white/5">
+            <nav className="flex flex-col gap-3 rounded-2xl   p-3 backdrop-blur supports-[backdrop-filter]:bg-white/5">
                 <NavLink
                     to="/"
                     end

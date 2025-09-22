@@ -3,33 +3,7 @@ import Dot from "@/components/Dot";
 import CodeBlock from "@/components/CodeBlock";
 import ProjectsList from "@/components/ProjectList";
 import { projects } from "@/data/projects";
-
-const goSnippet = `package main
-
-
-import (
-"net/http"
-"github.com/gorilla/websocket"
-)
-
-
-var upgrader = websocket.Upgrader{}
-
-
-func handleWS(w http.ResponseWriter, r *http.Request) {
-c, _ := upgrader.Upgrade(w, r, nil)
-defer c.Close()
-for {
-_, msg, _ := c.ReadMessage()
-_ = c.WriteMessage(1, msg)
-}
-}
-
-
-func main() {
-http.HandleFunc("/ws", handleWS)
-_ = http.ListenAndServe(":8080", nil)
-}`;
+import { description } from "@/data/description";
 
 const Home: React.FC = () => {
     return (
@@ -57,7 +31,7 @@ const Home: React.FC = () => {
                         </div>
                         <div className="text-xs text-slate-400">main.go</div>
                     </div>
-                    <CodeBlock code={goSnippet} language="go" />
+                    <CodeBlock code={description} language="go" />
                 </div>
             </section>
 
