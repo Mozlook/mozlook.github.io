@@ -48,9 +48,9 @@ const CodeBlock: React.FC<CodeBlockProps> = ({
 
     return (
         <div
-            className={`rounded-2xl border border-white/10 bg-slate-900/40 overflow-auto ${className}`}
+            className={`rounded-2xl border border-white/10 bg-slate-900/40 max-w-full  ${className}`}
         >
-            <pre className="font-mono text-sm leading-6 p-4">
+            <pre className="font-mono text-sm leading-6 p-4 w-full max-w-full overflo-w-auto">
                 <code>{highlighted}</code>
             </pre>
         </div>
