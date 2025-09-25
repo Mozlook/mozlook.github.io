@@ -46,22 +46,4 @@ export const projects: Project[] = [
         iconGradientFrom: "from-fuchsia-500/60",
         iconGradientTo: "to-violet-600/60",
     },
-    {
-        id: "p4",
-        title: "Project Four",
-        desc: "Lorem ipsum dolor sit amet, consectetur",
-        href: "#",
-        tags: ["Infra"],
-        iconGradientFrom: "from-fuchsia-500/60",
-        iconGradientTo: "to-violet-600/60",
-    },
-    {
-        id: "p4",
-        title: "Project Four",
-        desc: "Lorem ipsum dolor sit amet, consectetur",
-        href: "#",
-        tags: ["Infra"],
-        iconGradientFrom: "from-fuchsia-500/60",
-        iconGradientTo: "to-violet-600/60",
-    },
 ];

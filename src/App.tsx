@@ -2,6 +2,7 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Sidebar from "./components/Sidebar";
 import Home from "./pages/Home";
+import Projects from "./pages/Projects";
 
 const App: React.FC = () => {
     return (
@@ -12,6 +13,8 @@ const App: React.FC = () => {
                 <div className="flex-1 min-w-0">
                     <Routes>
                         <Route path="/" element={<Home />} />
+                        <Route path="/projects" element={<Projects />} />
+                        <Route path="/projects/:id" element={<Projects />} />
                         <Route
                             path="/grid"
                             element={<div className="flex-1">Grid page…</div>}

@@ -53,7 +53,7 @@ const ProjectsList: React.FC<ProjectsListProps> = ({
         >
             <h2 className="px-2 text-2xl font-semibold tracking-tight">{title}</h2>
             {isCarousel ? (
-                <ProjectCarousel projects={projects} />
+                <ProjectCarousel projects={projects} speed={50} />
             ) : (
                 <div ref={viewportRef} className="mt-6 overflow-hidden">
                     <ProjectsGrid firstItemRef={firstItemRef} projects={projects} />
