@@ -32,7 +32,7 @@ const ProjectCarousel: React.FC<ProjectCarouselProps> = ({
             if (first && nextCycleStart) {
                 const left = first.getBoundingClientRect().left;
                 const right = nextCycleStart.getBoundingClientRect().left;
-                originalWidthRef.current = right - left; // faktyczna szerokość jednego cyklu
+                originalWidthRef.current = right - left;
             }
 
             const w = originalWidthRef.current || 1;
