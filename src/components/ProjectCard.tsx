@@ -41,8 +41,6 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
             {href && (
                 <a
                     href={href}
-                    target="_blank"
-                    rel="noreferrer"
                     className="absolute inset-0"
                     aria-label={`${title} – open`}
                 />

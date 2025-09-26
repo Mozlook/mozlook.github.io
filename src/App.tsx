@@ -14,7 +14,7 @@ const App: React.FC = () => {
                     <Routes>
                         <Route path="/" element={<Home />} />
                         <Route path="/projects" element={<Projects />} />
-                        <Route path="/projects/:id" element={<Projects />} />
+                        <Route path="/projects/:title" element={<Projects />} />
                         <Route
                             path="/grid"
                             element={<div className="flex-1">Grid page…</div>}
