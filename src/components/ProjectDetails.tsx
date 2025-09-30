@@ -1,12 +1,17 @@
 import { useEffect, useRef, useState } from "react";
 import FolderIcon from "@/assets/FolderIcon";
 import type { Project } from "@/types/project";
+import ImageGallery from "./ImageGallery";
 
 type ProjectDetailsProps = {
     project?: Project;
+    selectRandomProject: () => void;
 };
 
-const ProjectDetails: React.FC<ProjectDetailsProps> = ({ project }) => {
+const ProjectDetails: React.FC<ProjectDetailsProps> = ({
+    project,
+    selectRandomProject,
+}) => {
     const [open, setOpen] = useState(false);
     const menuRef = useRef<HTMLDivElement>(null);
 
@@ -103,7 +108,6 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({ project }) => {
                         )}
                     </div>
                 </div>
-
                 {!!project.tags?.length && (
                     <div className="flex flex-wrap gap-2">
                         {project.tags.map((t) => (
@@ -116,17 +120,15 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({ project }) => {
                         ))}
                     </div>
                 )}
-
                 {project.desc && (
                     <p className="max-w-prose text-lg leading-7 text-slate-300/90">
                         {project.desc}
                     </p>
                 )}
+                <ImageGallery project={project} />
             </div>
-            // TODO: add image gallery
         );
     }
-    // TODO: add random project function
     return (
         <div className="flex h-full w-full flex-col items-center justify-center gap-4 rounded-2xl border border-white/10 bg-gradient-to-b from-white/5 to-white/[.03] p-8 text-center shadow-[0_10px_40px_-10px_rgba(0,0,0,.6)] ring-1 ring-black/40">
             <FolderIcon />
@@ -135,7 +137,7 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({ project }) => {
                 Choose one from the list to see details and gallery.
             </p>
             <button
-                disabled
+                onClick={selectRandomProject}
                 className="mt-2 inline-flex items-center justify-center rounded-lg border border-white/10 bg-white/5 px-4 py-1.5 text-sm text-slate-300 transition hover:bg-white/10 disabled:opacity-40"
             >
                 Random project

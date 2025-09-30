@@ -12,7 +12,10 @@ const ProjectCarousel: React.FC<ProjectCarouselProps> = ({
     const viewportRef = useRef<HTMLDivElement>(null);
     const trackRef = useRef<HTMLDivElement>(null);
 
-    const items = useMemo(() => [...projects, ...projects], [projects]);
+    const items = useMemo(
+        () => [...projects, ...projects, ...projects],
+        [projects],
+    );
 
     const originalWidthRef = useRef<number>(0);
     const offsetRef = useRef<number>(0);

@@ -2,13 +2,20 @@ import Dot from "@/components/Dot";
 import ProjectCard from "@/components/ProjectCard";
 import ProjectDetails from "@/components/ProjectDetails";
 import { projects } from "@/data/projects";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const Projects: React.FC = () => {
     const { title } = useParams<{ title?: string }>();
     const project = projects.find(
         (p) => p.title.toLowerCase() === (title ?? "").toLowerCase(),
     );
+    const navigate = useNavigate();
+
+    function selectRandomProject() {
+        const max = projects.length;
+        const randomNumber = Math.floor(Math.random() * max);
+        navigate(projects[randomNumber].title);
+    }
     return (
         <main className="flex-1">
             <section className="grid items-start gap-6 min-h-0 lg:grid-cols-8">
@@ -41,7 +48,10 @@ const Projects: React.FC = () => {
                             <Dot className="bg-emerald-400/90" />
                         </div>
                     </div>
-                    <ProjectDetails project={project} />
+                    <ProjectDetails
+                        project={project}
+                        selectRandomProject={selectRandomProject}
+                    />
                 </div>
             </section>
         </main>

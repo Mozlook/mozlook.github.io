@@ -4,6 +4,7 @@ export const projects: Project[] = [
     {
         id: "p1",
         title: "Spotiguess",
+        slug: "spotiguess",
         desc: "Lorem ipsum dolor amet, consectetur",
         href: "/projects/Spotiguess",
         preview: "https://spotiguess.mmozoluk.com",
@@ -15,6 +16,7 @@ export const projects: Project[] = [
     {
         id: "p2",
         title: "ProjectTwo",
+        slug: "spotiguess",
         desc: "Lorem ipsum dolor sit amet, consectetur",
         href: "/projects/ProjectTwo",
         tags: ["React", "UI"],
@@ -24,6 +26,7 @@ export const projects: Project[] = [
     {
         id: "p3",
         title: "ProjectThree",
+        slug: "spotiguess",
         desc: "Lorem ipsum dolor sit amet, consectetur",
         href: "/projects/ProjectThree",
         tags: ["API"],
@@ -33,6 +36,7 @@ export const projects: Project[] = [
     {
         id: "p4",
         title: "ProjectFour",
+        slug: "spotiguess",
         desc: "Lorem ipsum dolor sit amet, consectetur",
         href: "/projects/ProjectFour",
         tags: ["Infra"],
@@ -42,8 +46,9 @@ export const projects: Project[] = [
     {
         id: "p5",
         title: "ProjectFive",
+        slug: "spotiguess",
         desc: "Lorem ipsum dolor sit amet, consectetur",
-        href: "/projects/ProjectTwo",
+        href: "/projects/ProjectFive",
         tags: ["Infra"],
         iconGradientFrom: "from-fuchsia-500/60",
         iconGradientTo: "to-violet-600/60",
