@@ -8,7 +8,7 @@ type ProjectCardProps = {
 const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
     const {
         title,
-        desc,
+        headline,
         href,
         iconGradientFrom = "from-indigo-500/60",
         iconGradientTo = "to-blue-600/60",
@@ -23,7 +23,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
             <h3 className="text-lg font-medium text-slate-100 break-words">
                 {title}
             </h3>
-            <p className="mt-1 text-sm text-slate-400 break-words">{desc}</p>
+            <p className="mt-1 text-sm text-slate-400 break-words">{headline}</p>
 
             {tags.length > 0 && (
                 <div className="mt-3 flex flex-wrap gap-2">

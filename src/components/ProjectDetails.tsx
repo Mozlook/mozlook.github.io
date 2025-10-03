@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import FolderIcon from "@/assets/FolderIcon";
 import type { Project } from "@/types/project";
 import ImageGallery from "./ImageGallery";
+import ProjectDescription from "./ProjectDescription";
 
 type ProjectDetailsProps = {
     project?: Project;
@@ -37,7 +38,7 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({
         const repos = Array.isArray(project.repo) ? project.repo.slice(0, 6) : [];
 
         return (
-            <div className="flex w-full flex-col gap-4 rounded-2xl border border-white/10 bg-gradient-to-b from-white/5 to-white/[.03] p-6 text-left shadow-[0_10px_40px_-10px_rgba(0,0,0,.6)] ring-1 ring-black/40">
+            <div className="flex w-full flex-col h-[80vh] gap-4 rounded-2xl border border-white/10 bg-gradient-to-b from-white/5 to-white/[.03] p-6 text-left shadow-[0_10px_40px_-10px_rgba(0,0,0,.6)] ring-1 ring-black/40">
                 <div className="flex items-start justify-between gap-4">
                     <div className="flex items-center gap-4">
                         <div
@@ -120,11 +121,10 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({
                         ))}
                     </div>
                 )}
-                {project.desc && (
-                    <p className="max-w-prose text-lg leading-7 text-slate-300/90">
-                        {project.desc}
-                    </p>
-                )}
+                <div className="max-w-prose max-h-[45%] overflow-y-auto text-lg leading-7 text-slate-300/90">
+                    <ProjectDescription slug={project.slug} />
+                </div>
+
                 <ImageGallery project={project} />
             </div>
         );
