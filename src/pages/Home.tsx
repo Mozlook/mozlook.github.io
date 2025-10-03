@@ -16,9 +16,7 @@ const Home: React.FC = () => {
                     <p className="mt-4 max-w-prose text-slate-300/90">
                         Full-Stack Software Developer
                     </p>
-                    <button className="mt-8 inline-flex items-center justify-center rounded-xl border border-teal-500/30 bg-teal-500/10 px-5 py-2.5 font-medium text-teal-200 shadow-[inset_0_1px_0_rgba(255,255,255,.06),0_8px_30px_-10px_rgba(13,148,136,.35)] transition hover:bg-teal-500/20">
-                        Get Started
-                    </button>
+
                     <div className="pointer-events-none absolute -inset-px rounded-3xl ring-1 ring-white/5" />
                 </div>
 

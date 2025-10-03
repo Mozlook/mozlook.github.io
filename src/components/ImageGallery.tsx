@@ -1,21 +1,36 @@
 import type { Project } from "@/types/project";
 import { getProjectImages } from "@/helper";
 import { useState } from "react";
+import ImageLightBox from "./ImageLightBox";
 
 type ImageGalleryProps = {
     project: Project;
 };
 const ImageGallery: React.FC<ImageGalleryProps> = ({ project }) => {
     const images = getProjectImages(project.slug);
+    const [isOpen, setIsOpen] = useState(false);
     const [index, setIndex] = useState(0);
     if (images.length === 0) return null;
-    //TODO: Add full screen gallery after clicking on image
+
+    function toggleIsOpen() {
+        setIsOpen((prev) => !prev);
+    }
     return (
         <div className="relative flex flex-col items-center h-full w-full group">
+            {isOpen && (
+                <ImageLightBox
+                    images={images}
+                    toggleIsOpen={toggleIsOpen}
+                    activeIndex={index}
+                    setActiveIndex={setIndex}
+                />
+            )}
             <img
+                onClick={toggleIsOpen}
                 src={images[index]}
                 alt={`${project.title} screenshot ${index + 1}`}
                 className="h-full w-full object-contain rounded-xl"
+                draggable={false}
             />
 
             <button

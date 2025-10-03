@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { Project } from "@/types/project";
 import ProjectCard from "./ProjectCard";
 type ProjectCarouselProps = {
@@ -21,6 +21,8 @@ const ProjectCarousel: React.FC<ProjectCarouselProps> = ({
     const offsetRef = useRef<number>(0);
     const lastTsRef = useRef<number | null>(null);
     const rafIdRef = useRef<number | null>(null);
+
+    const [running, setRunning] = useState<boolean>(true);
 
     useEffect(() => {
         const measure = () => {
@@ -71,7 +73,7 @@ const ProjectCarousel: React.FC<ProjectCarouselProps> = ({
             const dt = (ts - lastTsRef.current) / 1000;
             lastTsRef.current = ts;
 
-            if (w > 0) {
+            if (running && w > 0) {
                 offsetRef.current += speed * dt;
                 if (offsetRef.current >= 1.5 * w) {
                     offsetRef.current -= w;
@@ -88,10 +90,15 @@ const ProjectCarousel: React.FC<ProjectCarouselProps> = ({
             if (rafIdRef.current) cancelAnimationFrame(rafIdRef.current);
             lastTsRef.current = null;
         };
-    }, [speed]);
+    }, [speed, running]);
 
     return (
-        <div ref={viewportRef} className="relative mt-6 overflow-hidden w-full">
+        <div
+            ref={viewportRef}
+            className="relative mt-6 overflow-hidden w-full"
+            onMouseEnter={() => setRunning(false)}
+            onMouseLeave={() => setRunning(true)}
+        >
             <div
                 ref={trackRef}
                 className="flex flex-nowrap gap-6 will-change-transform"
