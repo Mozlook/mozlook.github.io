@@ -1,16 +1,20 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { Project } from "@/types/project";
 import ProjectCard from "./ProjectCard";
+import ProjectGalleryTooltip from "./ProjectGalleryTooltip";
+
 type ProjectCarouselProps = {
     projects: Project[];
     speed?: number;
 };
+
 const ProjectCarousel: React.FC<ProjectCarouselProps> = ({
     projects,
     speed = 50,
 }) => {
     const viewportRef = useRef<HTMLDivElement>(null);
     const trackRef = useRef<HTMLDivElement>(null);
+    const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
     const items = useMemo(
         () => [...projects, ...projects, ...projects],
@@ -23,6 +27,11 @@ const ProjectCarousel: React.FC<ProjectCarouselProps> = ({
     const rafIdRef = useRef<number | null>(null);
 
     const [running, setRunning] = useState<boolean>(true);
+    const [previewProject, setPreviewProject] = useState<number | null>(null);
+
+    useEffect(() => {
+        cardRefs.current = cardRefs.current.slice(0, items.length);
+    }, [items.length]);
 
     useEffect(() => {
         const measure = () => {
@@ -95,27 +104,44 @@ const ProjectCarousel: React.FC<ProjectCarouselProps> = ({
     return (
         <div
             ref={viewportRef}
-            className="relative mt-6 overflow-hidden w-full"
+            className="relative mt-6 overflow-visible w-full"
             onMouseEnter={() => setRunning(false)}
             onMouseLeave={() => setRunning(true)}
         >
-            <div
-                ref={trackRef}
-                className="flex flex-nowrap gap-6 will-change-transform"
-                style={{ transform: "translate3d(0,0,0)" }}
-            >
-                {items.map((project, i) => (
-                    <div
-                        key={`${project.id}-${i}`}
-                        className={
-                            "shrink-0 min-w-[280px] sm:min-w-[320px] lg:min-w-[360px]"
-                        }
-                    >
-                        <ProjectCard project={project} />
-                    </div>
-                ))}
+            <div className="overflow-x-hidden">
+                <div
+                    ref={trackRef}
+                    className="flex flex-nowrap gap-6 will-change-transform"
+                    style={{ transform: "translate3d(0,0,0)" }}
+                >
+                    {items.map((project, i) => {
+                        const isPreview = previewProject !== null && previewProject === i;
+
+                        return (
+                            <div
+                                key={`${project.id}-${i}`}
+                                ref={(el) => {
+                                    cardRefs.current[i] = el;
+                                }}
+                                className="relative shrink-0 min-w-[280px] sm:min-w-[320px] lg:min-w-[360px]"
+                                style={{ zIndex: isPreview ? 100 : 1 }}
+                                onMouseEnter={() => setPreviewProject(i)}
+                                onMouseLeave={() => setPreviewProject(null)}
+                            >
+                                {isPreview && cardRefs.current[i] && (
+                                    <ProjectGalleryTooltip
+                                        project={project}
+                                        anchorRef={{ current: cardRefs.current[i] }}
+                                    />
+                                )}
+                                <ProjectCard project={project} />
+                            </div>
+                        );
+                    })}
+                </div>
             </div>
         </div>
     );
 };
+
 export default ProjectCarousel;
