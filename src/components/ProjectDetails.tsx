@@ -3,6 +3,7 @@ import FolderIcon from "@/assets/FolderIcon";
 import type { Project } from "@/types/project";
 import ImageGallery from "./ImageGallery";
 import ProjectDescription from "./ProjectDescription";
+import StatusBadge from "./StatusBadge";
 
 type ProjectDetailsProps = {
     project?: Project;
@@ -47,6 +48,7 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({
                         <h2 className="text-2xl font-semibold tracking-tight text-white">
                             {project.title}
                         </h2>
+                        <StatusBadge status={project.status} className="ml-1" />
                     </div>
 
                     <div className="relative flex items-center gap-3" ref={menuRef}>

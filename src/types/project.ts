@@ -1,3 +1,4 @@
+export type ProjectStatus = "finished" | "maintained" | "wip";
 export type Project = {
     id: string;
     title: string;
@@ -9,4 +10,5 @@ export type Project = {
     repo?: { label: string; href: string }[];
     iconGradientFrom?: string;
     iconGradientTo?: string;
+    status: ProjectStatus;
 };

@@ -12,6 +12,7 @@ export const projects: Project[] = [
         tags: ["Go", "React", "TypeScript", "Websocket"],
         iconGradientFrom: "from-indigo-500/60",
         iconGradientTo: "to-blue-600/60",
+        status: "maintained",
     },
     {
         id: "p2",
@@ -30,6 +31,7 @@ export const projects: Project[] = [
         tags: ["React", "Django", "Python"],
         iconGradientFrom: "from-rose-500/60",
         iconGradientTo: "to-orange-500/60",
+        status: "finished",
     },
     {
         id: "p3",
@@ -48,6 +50,7 @@ export const projects: Project[] = [
         tags: ["React", "TailwindCSS", "Django", "Python"],
         iconGradientFrom: "from-fuchsia-500/60",
         iconGradientTo: "to-violet-600/60",
+        status: "wip",
     },
     {
         id: "p4",
@@ -62,6 +65,7 @@ export const projects: Project[] = [
         tags: ["React", "TailwindCSS", "Responsive Design"],
         iconGradientFrom: "from-emerald-500/60",
         iconGradientTo: "to-teal-600/60",
+        status: "finished",
     },
 
     {
@@ -73,5 +77,6 @@ export const projects: Project[] = [
         tags: ["Infra"],
         iconGradientFrom: "from-fuchsia-500/60",
         iconGradientTo: "to-violet-600/60",
+        status: "wip",
     },
 ];
