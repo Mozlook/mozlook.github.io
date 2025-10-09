@@ -24,20 +24,16 @@ const ProjectsList: React.FC<ProjectsListProps> = ({
             if (!vp) return;
 
             const w = vp.offsetWidth;
-            const gap = 24; // gap-6
-            const lg = w >= 1024; // zgodnie z Tailwind lg:
+            const gap = 24;
+            const lg = w >= 1024;
             const maxCols = 4;
 
-            // Docelowa, estymowana MIN-szerokość karty na desktopie (spójna z karuzelą)
             const cardMin = 360;
 
-            // Ile potrzeba, by ZMIEŚCIĆ jeden rząd 4 kart
             const needForOneRow = maxCols * cardMin + (maxCols - 1) * gap;
 
-            // Histereza (~1 gap) żeby nie migało przy granicy
             const HYST = 24;
 
-            // Tylko na desktopie: jeśli 1 rząd się NIE mieści → karuzela
             const shouldCarousel = lg && w + HYST < needForOneRow;
 
             setIsCarousel(shouldCarousel);
