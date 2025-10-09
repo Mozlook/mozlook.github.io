@@ -39,19 +39,30 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({
         const repos = Array.isArray(project.repo) ? project.repo.slice(0, 6) : [];
 
         return (
-            <div className="flex w-full flex-col h-[80vh] gap-4 rounded-2xl border border-white/10 bg-gradient-to-b from-white/5 to-white/[.03] p-6 text-left shadow-[0_10px_40px_-10px_rgba(0,0,0,.6)] ring-1 ring-black/40">
-                <div className="flex items-start justify-between gap-4">
-                    <div className="flex items-center gap-4">
+            <div
+                className={[
+                    "flex w-full flex-col gap-4",
+                    "rounded-2xl border border-white/10 bg-gradient-to-b from-white/5 to-white/[.03] p-4 sm:p-6",
+                    "text-left shadow-[0_10px_40px_-10px_rgba(0,0,0,.6)] ring-1 ring-black/40",
+                    "min-h-[420px] md:min-h-[520px] lg:h-[80vh]",
+                ].join(" ")}
+            >
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                    <div className="flex flex-wrap items-center gap-3 sm:gap-4">
                         <div
-                            className={`h-10 w-10 rounded-xl bg-gradient-to-br ${project.iconGradientFrom ?? "from-indigo-500/60"} ${project.iconGradientTo ?? "to-blue-600/60"}`}
+                            className={`h-10 w-10 shrink-0 rounded-xl bg-gradient-to-br ${project.iconGradientFrom ?? "from-indigo-500/60"} ${project.iconGradientTo ?? "to-blue-600/60"}`}
+                            aria-hidden
                         />
                         <h2 className="text-2xl font-semibold tracking-tight text-white">
                             {project.title}
                         </h2>
-                        <StatusBadge status={project.status} className="ml-1" />
+                        <StatusBadge status={project.status} className="sm:ml-1" />
                     </div>
 
-                    <div className="relative flex items-center gap-3" ref={menuRef}>
+                    <div
+                        className="relative flex flex-wrap items-center gap-2 sm:gap-3"
+                        ref={menuRef}
+                    >
                         {previewLink && (
                             <a
                                 href={previewLink}
@@ -81,6 +92,7 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({
                                     strokeLinecap="round"
                                 />
                             </svg>
+                            <span className="sr-only">Open repository menu</span>
                         </button>
 
                         {open && (
@@ -111,8 +123,9 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({
                         )}
                     </div>
                 </div>
+
                 {!!project.tags?.length && (
-                    <div className="flex flex-wrap gap-2">
+                    <div className="-mt-1 flex flex-wrap gap-2">
                         {project.tags.map((t) => (
                             <span
                                 key={t}
@@ -123,14 +136,23 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({
                         ))}
                     </div>
                 )}
-                <div className="max-w-prose max-h-[45%] overflow-y-auto text-lg leading-7 text-slate-300/90">
+
+                <div
+                    className="max-w-prose overflow-y-auto text-lg leading-7 text-slate-300/90"
+                    style={{
+                        maxHeight: "35vh",
+                    }}
+                >
                     <ProjectDescription slug={project.slug} />
                 </div>
 
-                <ImageGallery project={project} />
+                <div className="mt-auto">
+                    <ImageGallery project={project} />
+                </div>
             </div>
         );
     }
+
     return (
         <div className="flex h-full w-full flex-col items-center justify-center gap-4 rounded-2xl border border-white/10 bg-gradient-to-b from-white/5 to-white/[.03] p-8 text-center shadow-[0_10px_40px_-10px_rgba(0,0,0,.6)] ring-1 ring-black/40">
             <FolderIcon />

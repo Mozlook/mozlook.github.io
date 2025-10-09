@@ -16,18 +16,18 @@ const ProjectCarousel: React.FC<ProjectCarouselProps> = ({
     const trackRef = useRef<HTMLDivElement>(null);
     const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-    const items = useMemo(
-        () => [...projects, ...projects, ...projects],
-        [projects],
-    );
+    const items = useMemo(() => [...projects, ...projects], [projects]);
 
-    const originalWidthRef = useRef<number>(0);
-    const offsetRef = useRef<number>(0);
+    const originalWidthRef = useRef(0);
+    const offsetRef = useRef(0);
     const lastTsRef = useRef<number | null>(null);
     const rafIdRef = useRef<number | null>(null);
 
-    const [running, setRunning] = useState<boolean>(true);
-    const [previewProject, setPreviewProject] = useState<number | null>(null);
+    const reduceMotion =
+        typeof window !== "undefined" &&
+        window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+
+    const runningRef = useRef<boolean>(!reduceMotion);
 
     useEffect(() => {
         cardRefs.current = cardRefs.current.slice(0, items.length);
@@ -46,19 +46,16 @@ const ProjectCarousel: React.FC<ProjectCarouselProps> = ({
             if (first && nextCycleStart) {
                 const left = first.getBoundingClientRect().left;
                 const right = nextCycleStart.getBoundingClientRect().left;
-                originalWidthRef.current = right - left;
+                originalWidthRef.current = right - left; // = w
             }
 
             const w = originalWidthRef.current || 1;
             offsetRef.current = offsetRef.current % w;
 
-            if (track) {
-                track.style.transform = `translate3d(-${offsetRef.current}px,0,0)`;
-            }
+            track.style.transform = `translate3d(-${offsetRef.current}px,0,0)`;
         };
 
         const id = requestAnimationFrame(measure);
-
         const ro = new ResizeObserver(() => requestAnimationFrame(measure));
         if (trackRef.current) ro.observe(trackRef.current);
 
@@ -82,31 +79,35 @@ const ProjectCarousel: React.FC<ProjectCarouselProps> = ({
             const dt = (ts - lastTsRef.current) / 1000;
             lastTsRef.current = ts;
 
-            if (running && w > 0) {
+            if (runningRef.current && w > 0) {
                 offsetRef.current += speed * dt;
-                if (offsetRef.current >= 1.5 * w) {
+                if (offsetRef.current >= w) {
                     offsetRef.current -= w;
                 }
-
                 track.style.transform = `translate3d(-${offsetRef.current}px,0,0)`;
             }
             rafIdRef.current = requestAnimationFrame(step);
         };
 
         rafIdRef.current = requestAnimationFrame(step);
-
         return () => {
             if (rafIdRef.current) cancelAnimationFrame(rafIdRef.current);
             lastTsRef.current = null;
         };
-    }, [speed, running]);
+    }, [speed]);
+
+    const [previewProject, setPreviewProject] = useState<number | null>(null);
 
     return (
         <div
             ref={viewportRef}
-            className="relative mt-6 overflow-visible w-full"
-            onMouseEnter={() => setRunning(false)}
-            onMouseLeave={() => setRunning(true)}
+            className="relative mt-6 w-full overflow-x-hidden overflow-y-visible"
+            onMouseEnter={() => {
+                runningRef.current = false;
+            }}
+            onMouseLeave={() => {
+                runningRef.current = !reduceMotion;
+            }}
         >
             <div className="overflow-x-hidden">
                 <div
@@ -134,6 +135,7 @@ const ProjectCarousel: React.FC<ProjectCarouselProps> = ({
                                         anchorRef={{ current: cardRefs.current[i] }}
                                     />
                                 )}
+
                                 <ProjectCard project={project} />
                             </div>
                         );

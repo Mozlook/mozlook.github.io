@@ -70,10 +70,10 @@ export const projects: Project[] = [
 
     {
         id: "p5",
-        title: "ProjectFive",
-        slug: "spotiguess",
+        title: "Placeholder",
+        slug: "placeholder",
         headline: "Lorem ipsum dolor sit amet, consectetur",
-        href: "/projects/ProjectFive",
+        href: "/projects/Placeholder",
         tags: ["Infra"],
         iconGradientFrom: "from-fuchsia-500/60",
         iconGradientTo: "to-violet-600/60",

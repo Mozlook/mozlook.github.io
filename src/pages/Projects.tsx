@@ -1,46 +1,88 @@
+import React, { useEffect, useMemo, useRef } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Dot from "@/components/Dot";
 import ProjectCard from "@/components/ProjectCard";
 import ProjectDetails from "@/components/ProjectDetails";
 import { projects } from "@/data/projects";
-import { useNavigate, useParams } from "react-router-dom";
 
 const Projects: React.FC = () => {
     const { title } = useParams<{ title?: string }>();
-    const project = projects.find(
-        (p) => p.title.toLowerCase() === (title ?? "").toLowerCase(),
+    const activeTitle = (title ?? "").toLowerCase();
+
+    const project = useMemo(
+        () => projects.find((p) => p.title.toLowerCase() === activeTitle),
+        [activeTitle],
     );
+
     const navigate = useNavigate();
 
+    const listRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        if (!title || !listRef.current) return;
+        const selector = `[data-project="${CSS.escape(title)}"]`;
+        const el = listRef.current.querySelector(selector) as HTMLElement | null;
+        if (el) el.scrollIntoView({ block: "nearest", behavior: "smooth" });
+    }, [title]);
+
     function selectRandomProject() {
-        const max = projects.length;
-        const randomNumber = Math.floor(Math.random() * max);
-        navigate(projects[randomNumber].title);
+        const random = projects[Math.floor(Math.random() * projects.length)];
+        navigate(`/projects/${encodeURIComponent(random.title)}`);
     }
+
     return (
         <main className="flex-1">
-            <section className="grid items-start gap-6 min-h-0 lg:grid-cols-8">
-                <div className="lg:col-span-3 relative rounded-3xl border h-[90vh] min-h-0 overflow-hidden border-white/10 bg-gradient-to-b from-white/5 to-white/[.03] p-8 shadow-[0_10px_40px_-10px_rgba(0,0,0,.6)] ring-1 ring-black/40 flex flex-col">
-                    <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl flex-shrink-0">
+            <section className="grid min-h-0 items-start gap-6 lg:grid-cols-8">
+                <div className="lg:col-span-3 flex h-[86vh] min-h-[540px] flex-col overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-b from-white/5 to-white/[.03] p-6 ring-1 ring-black/40">
+                    <h1 className="flex-shrink-0 text-3xl font-semibold tracking-tight sm:text-4xl">
                         Projects
                     </h1>
+
                     <div
+                        ref={listRef}
                         className="mt-4 flex-1 overflow-auto pr-2 scrollbar-hide"
                         style={{
                             maskImage:
-                                "linear-gradient(to bottom, transparent 0px, black 24px, black calc(100% - 24px), transparent 100%)",
+                                "linear-gradient(to bottom, transparent 0, black 24px, black calc(100% - 24px), transparent 100%)",
                             WebkitMaskImage:
-                                "linear-gradient(to bottom, transparent 0px, black 24px, black calc(100% - 24px), transparent 100%)",
+                                "linear-gradient(to bottom, transparent 0, black 24px, black calc(100% - 24px), transparent 100%)",
                         }}
                     >
-                        <div className="flex flex-col mt-6 gap-6">
-                            {projects.map((p, i) => {
-                                return <ProjectCard key={`${p.id}-${i}`} project={p} />;
+                        <ul
+                            className="mt-6 flex flex-col gap-6"
+                            role="listbox"
+                            aria-label="Projects"
+                        >
+                            {projects.map((p) => {
+                                const isActive = p.title.toLowerCase() === activeTitle;
+                                return (
+                                    <li
+                                        key={p.id}
+                                        role="option"
+                                        aria-selected={isActive}
+                                        data-project={p.title}
+                                    >
+                                        <Link
+                                            to={`/projects/${encodeURIComponent(p.title)}`}
+                                            className="block"
+                                        >
+                                            <ProjectCard
+                                                project={p}
+                                                className={
+                                                    isActive
+                                                        ? "border-cyan-400/40 shadow-[inset_0_0_0_1px_rgba(34,211,238,.35)]"
+                                                        : ""
+                                                }
+                                            />
+                                        </Link>
+                                    </li>
+                                );
                             })}
-                        </div>
+                        </ul>
                     </div>
                 </div>
 
-                <div className="relative lg:col-span-5 h-auto min-h-[200px] w-full overflow-auto rounded-3xl border border-white/10 bg-gradient-to-b from-white/5 to-white/[.03] p-6 shadow-[0_10px_40px_-10px_rgba(0,0,0,.6)] ring-1 ring-black/40">
+                <div className="relative lg:col-span-5 min-h-[280px] w-full overflow-auto rounded-3xl border border-white/10 bg-gradient-to-b from-white/5 to-white/[.03] p-6 ring-1 ring-black/40">
                     <div className="mb-4 flex items-center justify-between">
                         <div className="flex items-center gap-2">
                             <Dot className="bg-rose-400/90" />
@@ -48,6 +90,7 @@ const Projects: React.FC = () => {
                             <Dot className="bg-emerald-400/90" />
                         </div>
                     </div>
+
                     <ProjectDetails
                         project={project}
                         selectRandomProject={selectRandomProject}
