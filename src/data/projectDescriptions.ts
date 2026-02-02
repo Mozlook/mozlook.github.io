@@ -26,6 +26,44 @@ export const projectDescriptions: Record<string, ProjectDescription> = {
       "Resilient state recovery and player reconnections (WIP)",
     ],
   },
+  moneyControl: {
+    overview:
+      "MoneyControl is a full-stack home budgeting app for tracking expenses across multiple wallets, supporting shared wallets, a catalog of categories/products, recurring costs, and spending dashboards.",
+
+    features: [
+      "Google-only authentication (Google OAuth id_token verification) with a custom JWT session",
+      "Multi-wallet support (create/list/switch) with wallet sharing and roles (owner/editor)",
+      "Role-based access control enforced on both backend endpoints and frontend UI",
+      "Catalog management: categories and products with soft-delete and safe hard-delete rules",
+      "Transactions: create/list with filters (date range, current billing period, category/product), soft-delete, and refunds",
+      "FX support for transactions (optional original amount/currency + fx rate with validation)",
+      "Recurring expenses with create/update/deactivate and “apply recurring” to generate period transactions",
+      "Dashboard summaries: totals by category/product, spending by product importance, and last N billing periods history",
+      "CSV export of transactions for a selected date range",
+      "User settings: language, currency, billing day, and timezone",
+    ],
+
+    architecture: {
+      backend:
+        "Python + FastAPI REST API with SQLAlchemy ORM, Alembic migrations, and PostgreSQL (Docker). Includes auth modules for Google token verification and JWT issuance, plus wallet membership/ownership guards.",
+      frontend:
+        "React + Vite + TypeScript + Tailwind, with React Router for deep-linking (/app/w/:walletId/...) and React Query for server-state. Axios-based ApiClient with interceptors, centralized apiPaths, and modular API layers.",
+      communication:
+        "JSON over HTTP (REST). JWT Bearer auth for protected routes/endpoints; React Query handles caching and invalidation. CSV export delivered as a downloadable file response.",
+    },
+
+    technical: [
+      "PostgreSQL in Docker Compose; env-based configuration",
+      "SQLAlchemy session management (SessionLocal/get_db) and Alembic schema migrations",
+      "Pydantic schemas and validation (including timezone validation via IANA/ZoneInfo)",
+      "RBAC: wallet membership and owner-only operations (helpers + route guards)",
+      "Soft-delete strategy with guarded hard-delete when references exist",
+      "Billing-period aware filtering (current period vs manual date range)",
+      "Refund workflow with constraints (no double-refund / no refund-of-refund)",
+      "Frontend DX conventions: ESLint/Prettier, import aliases, consistent API module patterns",
+      "ApiClient error mapping + global 401 handling (logout/redirect)",
+    ],
+  },
   crypticquest: {
     overview:
       "CryptoQuest is a coding-puzzle web app with authentication and per-user progress tracking.",

@@ -57,13 +57,16 @@ export const projects: Project[] = [
     href: "/projects/MoneyControl",
     preview: "https://moneycontrol.mmozoluk.com",
     repo: [
-      { label: "Frontend", href: "https://github.com/Mozlook/MoneyControl" },
+      {
+        label: "Frontend",
+        href: "https://github.com/Mozlook/MoneyControlFrontend",
+      },
       {
         label: "Backend",
         href: "https://github.com/Mozlook/MoneyControlBackend",
       },
     ],
-    tags: ["React", "TailwindCSS", "Django", "Python"],
+    tags: ["React", "TailwindCSS", "FastAPI", "Python"],
     iconGradientFrom: "from-fuchsia-500/60",
     iconGradientTo: "to-violet-600/60",
     status: "wip",
