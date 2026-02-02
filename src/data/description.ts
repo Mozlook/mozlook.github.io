@@ -2,7 +2,7 @@ export const description = `package main
 
 func main() {
   dev := "Mikołaj Mozoluk"
-  age := 22
+  age := 23
   stack := map[string][]string{
     "Frontend": ["React", "TypeScript", "TailwindCSS"],
     "Backend":  ["Go", "Python", "Django"],

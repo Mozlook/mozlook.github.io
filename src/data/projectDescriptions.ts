@@ -26,7 +26,7 @@ export const projectDescriptions: Record<string, ProjectDescription> = {
       "Resilient state recovery and player reconnections (WIP)",
     ],
   },
-  moneyControl: {
+  moneycontrol: {
     overview:
       "MoneyControl is a full-stack home budgeting app for tracking expenses across multiple wallets, supporting shared wallets, a catalog of categories/products, recurring costs, and spending dashboards.",
 
