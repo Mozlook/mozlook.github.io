@@ -142,7 +142,7 @@ export const projectDescriptions: Record<string, ProjectDescription> = {
       "Tailwind CSS 4 used via @tailwindcss/vite for utility-first styling and responsive layout",
     ],
   },
-  mini_siem: {
+  miniSiem: {
     overview:
       "Mini-SIEM is a small SIEM-like system that continuously ingests JSONL application logs from a host directory, normalizes them into a unified event schema, stores them in SQLite, and exposes a JWT-protected API with a React-based log explorer UI.",
     features: [
