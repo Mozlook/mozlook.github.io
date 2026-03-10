@@ -142,4 +142,36 @@ export const projectDescriptions: Record<string, ProjectDescription> = {
       "Tailwind CSS 4 used via @tailwindcss/vite for utility-first styling and responsive layout",
     ],
   },
+  mini_siem: {
+    overview:
+      "Mini-SIEM is a small SIEM-like system that continuously ingests JSONL application logs from a host directory, normalizes them into a unified event schema, stores them in SQLite, and exposes a JWT-protected API with a React-based log explorer UI.",
+    features: [
+      "Continuous JSONL ingestion with offset tracking (no duplicate events after restart)",
+      "Unified normalized event schema with preserved raw payload (raw_json) and extracted payload (data_json)",
+      "Powerful filtering: time range, app, event type, level, user_id, src_ip, request_id, HTTP status, free-text search",
+      "Cursor-based pagination (before_ts + before_id) for stable scrolling/loading",
+      "Event details drawer with core fields + pretty-printed JSON + copy actions",
+      "Operational pages: readiness (/ready) and ingestion metrics (/metrics) with auto-refresh",
+      "Admin password login issuing JWT; strict CORS for the frontend origin",
+      "Production deployment behind Nginx with /siem prefix support (reverse proxy prefix stripping)",
+    ],
+    architecture: {
+      backend:
+        "FastAPI service with an in-process ingestion loop (background thread) that tails JSONL files from a read-only mounted log directory, validates/normalizes events, persists them to SQLite, and exposes JWT-protected endpoints for auth, metadata, queries, and ops.",
+      frontend:
+        "React + Vite SPA styled with Tailwind CSS; uses Axios for HTTP, TanStack React Query for caching/polling, and react-hot-toast for user-facing error reporting.",
+      communication:
+        "REST API over HTTPS with JWT Bearer authentication; frontend sends Authorization headers and handles 401 by clearing the token and redirecting to login.",
+    },
+    technical: [
+      "Byte-offset ingestion with rotation/truncation handling (inode + size checks)",
+      "Safe ingestion behavior for invalid JSON and incomplete lines (counters, no infinite loops)",
+      "String/payload caps to protect DB and UI from oversized log fields",
+      "Efficient listing endpoint returning lightweight rows; full details fetched on demand by event ID",
+      "Metadata endpoints for apps and event types (narrowed by selected app)",
+      "Readiness endpoint checks DB and ingestor freshness; metrics endpoint exposes totals and last-poll snapshot",
+      "Dockerized deployment with persistent DB mount and read-only logs mount; reverse-proxied behind Nginx at /siem",
+      "Netlify deployment for the SPA with environment-based API base URL configuration",
+    ],
+  },
 };
