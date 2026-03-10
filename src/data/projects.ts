@@ -38,8 +38,8 @@ export const projects: Project[] = [
   },
   {
     id: "p-3",
-    title: "Mini-SIEM",
-    slug: "miniSiem",
+    title: "MiniSIEM",
+    slug: "minisiem",
     headline: "Lightweight JSONL-to-SQLite SIEM with a log explorer UI",
     href: "/projects/MiniSIEM",
     preview: "https://siem.mmozoluk.com/",
