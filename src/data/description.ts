@@ -5,7 +5,7 @@ func main() {
   age := 23
   stack := map[string][]string{
     "Frontend": ["React", "TypeScript", "TailwindCSS"],
-    "Backend":  ["Go", "Python", "Django"],
+    "Backend":  ["Go", "Python", "FastAPI"],
   }
 
   println(dev, "— Full-Stack Developer")
